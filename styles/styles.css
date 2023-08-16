@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Adobe. All rights reserved.
+ * Copyright 2022 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -10,118 +10,119 @@
  * governing permissions and limitations under the License.
  */
 
- :root {
-  /* colors */
-  --link-color: #035fe6;
-  --link-hover-color: #136ff6;
-  --background-color: #fff;
-  --overlay-background-color: #eee;
-  --highlight-background-color: #ccc;
-  --text-color: #000;
+@import url('variables.css');
+@import url('typography.css');
 
-  /* fonts */
-  --body-font-family: 'helvetica neue', helvetica, ubuntu, roboto, noto, sans-serif;
-  --heading-font-family: var(--body-font-family);
-  --fixed-font-family: 'Roboto Mono', menlo, consolas, 'Liberation Mono', monospace;
-
-  /* body sizes */
-  --body-font-size-m: 22px;
-  --body-font-size-s: 18px;
-  --body-font-size-xs: 16px;
-
-  /* heading sizes */
-  --heading-font-size-xxl: 48px;
-  --heading-font-size-xl: 40px;
-  --heading-font-size-l: 32px;
-  --heading-font-size-m: 24px;
-  --heading-font-size-s: 20px;
-  --heading-font-size-xs: 18px;
-
-  /* nav height */
-  --nav-height: 64px;
-
+@font-face {
+  font-family: 'Trebuchet MS';
+  font-weight: 700;
+  size-adjust: 95%;
+  src: local('Trebuchet MS Bold'),
+    local('TrebuchetMSBold');
 }
 
-@media (min-width: 900px) {
-  :root {
-    --heading-font-size-xxl: 60px;
-    --heading-font-size-xl: 48px;
-    --heading-font-size-l: 36px;
-    --heading-font-size-m: 30px;
-    --heading-font-size-s: 24px;
-    --heading-font-size-xs: 22px;
-  }
+@font-face {
+  font-family: 'Trebuchet MS';
+  font-weight: 400;
+  size-adjust: 93%;
+  src: local('Trebuchet MS'),
+    local('TrebuchetMS');
 }
 
 body {
-  font-size: var(--body-font-size-m);
-  margin: 0;
+  display: block;
   font-family: var(--body-font-family);
-  line-height: 1.6;
-  color: var(--text-color);
+  font-size: var(--type-body-m-size);
+  line-height: var(--type-body-m-lh);
   background-color: var(--background-color);
+  color: var(--text-color);
+  margin: 0;
+  word-wrap: break-word;
+  -webkit-font-smoothing: antialiased;
+  opacity: 1 !important;
+  /* Fix Target hiding */
+}
+
+header:not(.global-navigation) {
+  height: 57px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  overflow: hidden;
+  background: #FFF;
+  box-sizing: border-box;
+}
+
+header:not(.global-navigation) nav {
   display: none;
 }
 
-body.appear {
-  display: unset;
+header:not(.global-navigation)~main {
+  margin-top: 57px;
 }
 
-header {
-  height: var(--nav-height);
+/*
+   After switching from the Milo nav to the FEDS one,
+   only the styles with 'header.global-navigation' need to be kept;
+   the 'global-navigation' class should also be removed from the 'header' selector
+   all of the ':not(.global-navigation)' rules can be entirely removed.
+  */
+header.global-navigation {
+  height: 64px;
+  /* TODO better approach for value? */
+  visibility: hidden;
 }
 
-h1, h2, h3,
-h4, h5, h6 {
-  font-family: var(--heading-font-family);
-  font-weight: 600;
-  line-height: 1.25;
-  margin-top: 1em;
-  margin-bottom: .5em;
-  scroll-margin: calc(var(--nav-height) + 1em);
+@media (min-width: 900px) {
+  header.global-navigation.has-breadcrumbs {
+    padding-bottom: 33px;
+    /* TODO better approach for value? */
+  }
 }
 
-h1 { font-size: var(--heading-font-size-xxl) }
-h2 { font-size: var(--heading-font-size-xl) }
-h3 { font-size: var(--heading-font-size-l) }
-h4 { font-size: var(--heading-font-size-m) }
-h5 { font-size: var(--heading-font-size-s) }
-h6 { font-size: var(--heading-font-size-xs) }
-
-p, dl, ol, ul, pre, blockquote {
-  margin-top: 1em;
-  margin-bottom: 1em;
+.breadcrumbs {
+  display: none;
 }
 
-hr {
-  margin-top: 1.5em;
-  margin-bottom: 1.5em;
-  border: 0;
-  border-bottom: 1px solid var(--overlay-background-color);
+h1 {
+  font-size: var(--type-heading-xl-size);
+  line-height: var(--type-heading-xl-lh);
 }
 
-code, pre, samp {
-  font-family: var(--fixed-font-family);
-  font-size: var(--body-font-size-s);
+h2 {
+  font-size: var(--type-heading-l-size);
+  line-height: var(--type-heading-l-lh);
 }
 
-code, samp {
-  padding: .125em;
+h3 {
+  font-size: var(--type-heading-m-size);
+  line-height: var(--type-heading-m-lh);
 }
 
-pre {
-  overflow: scroll;
+h4 {
+  font-size: var(--type-heading-s-size);
+  line-height: var(--type-heading-s-lh);
 }
 
-main pre {
-  background-color: var(--overlay-background-color);
-  padding: 1em;
-  border-radius: .25em;
-  overflow-x: auto;
-  white-space: pre;
+h5 {
+  font-size: var(--type-heading-xs-size);
+  line-height: var(--type-heading-xs-lh);
 }
 
-a:any-link {
+h6 {
+  font-size: var(--type-heading-xs-size);
+  line-height: var(--type-heading-xs-lh);
+}
+
+/* Links */
+a.auto-block,
+a.fragment {
+  display: none;
+}
+
+a {
   color: var(--link-color);
   text-decoration: none;
 }
@@ -131,113 +132,142 @@ a:hover {
   color: var(--link-hover-color);
 }
 
-/* buttons */
-a.button:any-link, button {
-  font-family: var(--body-font-family);
-  display: inline-block;
-  box-sizing: border-box;
-  text-decoration: none;
-  border: 2px solid transparent;
-  padding: 5px 30px;
-  text-align: center;
-  font-style: normal;
-  font-weight: 600;
-  cursor: pointer;
-  color: var(--background-color);
-  background-color: var(--link-color);
-  margin: 16px 0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  border-radius: 30px;
-}
-
-a.button:hover, a.button:focus, button:hover, button:focus  {
-  background-color: var(--link-hover-color);
-  cursor: pointer;
-}
-
-button:disabled, button:disabled:hover {
-  background-color: var(--overlay-background-color);
-  cursor: unset;
-}
-
-a.button.secondary, button.secondary {
-  background-color: unset;
-  border: 2px solid currentcolor;
-  color: var(--text-color)
-}
-
-main input {
-  font-size: 1.25rem;
-  width: 100%;
-  max-width: 50rem;
-  display: block;
-  margin-bottom: 1rem;
-  padding: 0.75rem 0.6rem;
-  border-radius: 0.25rem;
-  box-sizing: border-box;
-  border: 1px solid var(--text-color);
+/* Links Static */
+a.static,
+a.static:hover {
   color: var(--text-color);
-  background-color: var(--background-color);
+  text-decoration: underline;
 }
 
-main input:hover {
-  border: 1px solid var(--text-color);
+.dark a.static,
+.dark a.static:hover {
+  color: var(--color-white);
+  text-decoration: underline;
 }
 
-main blockquote {
-  font-style: italic;
-  margin: 3rem;
-  text-indent: -1rem;
-  hanging-punctuation: first;
+/* Buttons */
+.dark a {
+  color: var(--link-color-dark);
 }
 
-main blockquote p::before {
-  content: "“";
-  line-height: 0;
-}
-
-main blockquote p::after {
-  content: "”";
-  line-height: 0;
-}
-
-main img {
+img {
   max-width: 100%;
-  width: auto;
   height: auto;
 }
 
-.icon {
-  display: inline-block;
-  height: 24px;
-  width: 24px;
+/* Tooltip */
+.tooltip-wrapper {
+  visibility: hidden;
 }
 
-.icon svg {
+/* Not blocks */
+div:not([class])>div>div>img[src^="./media_"] {
+  width: 100%;
+}
+
+.container {
+  width: var(--grid-container-width);
+  margin: 0 auto;
+}
+
+.section .section-background img {
+  object-fit: cover;
   height: 100%;
   width: 100%;
 }
 
-main .section {
-  padding: 64px 16px;
+@media (min-width: 600px) {
+  dialog {
+    width: 60vw;
+  }
+
+  dialog .fragment>*:first-child {
+    margin-top: 0;
+  }
+
+  dialog .fragment>*:last-child {
+    margin-bottom: 0;
+  }
 }
 
-@media (min-width: 600px) {
-  main .section {
-    padding: 64px 32px;
-  }
+/* progressive section appearance */
+main>div,
+main .section[data-status='decorated'] {
+  display: none;
+}
+
+main>.section,
+.fragment>.section {
+  display: block;
+  position: relative;
+}
+
+main>.section>.content,
+.fragment>.section>.content {
+  display: block;
+  max-width: var(--grid-container-width);
+  margin: 0 auto;
+}
+
+div[data-failed="true"] {
+  border: 4px solid #ff00a0;
+  position: relative;
+  margin: 12px;
+  border-radius: 6px;
+  display: block;
+}
+
+div[data-failed="true"]::before {
+  content: attr(data-reason);
+  color: white;
+  padding: 0 0 2px 6px;
+  background: #ff00a0;
+  font-weight: 700;
+  display: block;
+}
+
+/* Utilities */
+picture.bg-img {
+  display: block;
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+
+picture.bg-img img {
+  object-fit: cover;
+  height: 100%;
+  width: 100%;
+}
+
+.milo-card-section {
+  visibility: hidden;
 }
 
 @media (min-width: 900px) {
-  .section > div {
-    max-width: 1200px;
-    margin: auto;
+  header:not(.global-navigation) {
+    min-height: 64px;
+    border-bottom: 1px solid #EAEAEA;
+    overflow: unset;
+  }
+
+  header:not(.global-navigation)~main {
+    margin-top: 64px;
+  }
+
+  header:not(.global-navigation).has-breadcrumbs {
+    min-height: 97px;
+  }
+
+  header:not(.global-navigation) nav {
+    display: unset;
+  }
+
+  header:not(.global-navigation).has-breadcrumbs+main {
+    margin-top: 97px;
   }
 }
 
-/* section metadata */
-main .section.highlight {
-  background-color: var(--highlight-background-color);
+.gnav-hide {
+  opacity: 0;
 }
